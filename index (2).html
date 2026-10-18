@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Termo de Acordo – Apostados Free Fire</title>
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--tx:#1b1b1b;--mut:#666;--bd:#d8d8d2;--ac:#c8102e;--ac2:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111;--card:#1c1c1c;--tx:#eee;--mut:#aaa;--bd:#333}}
+:root[data-theme="dark"]{--bg:#111;--card:#1c1c1c;--tx:#eee;--mut:#aaa;--bd:#333}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:680px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:16px}
+h1{font-size:1.25rem;margin:0 0 4px;text-align:center}
+.sub{text-align:center;color:var(--mut);margin:0 0 16px;font-size:.9rem}
+h2{font-size:1rem;margin:18px 0 4px}
+p{margin:4px 0}
+label{display:block;font-size:.85rem;color:var(--mut);margin:12px 0 4px}
+input[type=text]{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:1rem}
+canvas{width:100%;height:160px;border:1px dashed var(--mut);border-radius:8px;background:#fff;touch-action:none;display:block;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+button{padding:12px 16px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:1rem;cursor:pointer}
+button.p{background:var(--ac);color:var(--ac2);border-color:var(--ac);flex:1}
+.emp{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:8px}
+.stamp{width:150px;height:80px;border:2px dashed var(--mut);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:.8rem;letter-spacing:.1em}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:.95rem}
+.chk input{margin-top:5px;width:20px;height:20px}
+#msg{margin-top:12px;font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<div class="card">
+<h1>TERMO DE ACORDO E POLÍTICA DO CLIENTE</h1>
+<p class="sub">Apostados de Free Fire – Acordo entre as partes</p>
+
+<h2>1. Objeto</h2>
+<p>Este termo é um acordo entre Heitor Robert (Diretoria) e o cliente, e define as regras para o cliente puxar os apostados do jogo Free Fire, ou seja, organizar, marcar e conduzir as partidas apostadas.</p>
+
+<h2>2. Responsabilidade do cliente</h2>
+<p>O cliente se compromete a puxar todos os apostados combinados com Heitor Robert, sem recusar nem deixar partidas pendentes, com <b>uma única exceção</b>: os apostados que ele mesmo vai pagar.</p>
+
+<h2>3. Apostados pagos pelo cliente</h2>
+<p>Os apostados que o cliente escolher pagar ficam sob a responsabilidade financeira dele. O cliente deve avisar a Heitor Robert quais são antes de a partida começar. Depois de confirmado, o valor não pode ser cancelado nem devolvido, seja qual for o resultado.</p>
+
+<h2>4. Conduta</h2>
+<p>O cliente deve agir com honestidade, respeitar a outra parte e os jogadores e não usar hack, trapaça ou qualquer meio desleal. Em caso de descumprimento, o acordo poderá ser encerrado e ele cobrado dos valores pendentes.</p>
+
+<h2>5. Prazo</h2>
+<p>Este acordo vale por prazo indeterminado, enquanto durar o acordo entre as partes.</p>
+
+<h2>6. Aceite</h2>
+<p>O cliente declara que leu, entendeu e concorda com todos os termos acima, e que é maior de 18 anos.</p>
+
+<div class="emp">
+<div>
+<p><b>Heitor Robert</b></p>
+<p style="color:var(--mut)">Diretoria</p>
+</div>
+<div class="stamp">CARIMBO</div>
+</div>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">Assinatura do cliente</h2>
+<label for="nome">Nome completo</label>
+<input type="text" id="nome" autocomplete="name">
+<label for="doc">CPF</label>
+<input type="text" id="doc" inputmode="numeric">
+<label>Assine com o dedo ou o mouse abaixo</label>
+<canvas id="c"></canvas>
+<div class="row"><button id="limpar" type="button">Limpar assinatura</button></div>
+<label class="chk"><input type="checkbox" id="ok"> <span>Li e concordo com este termo.</span></label>
+<div class="row"><button class="p" id="enviar" type="button">Assinar e baixar termo</button></div>
+<div id="msg"></div>
+</div>
+</main>
+<script>
+(function(){
+var c=document.getElementById('c'),ctx=c.getContext('2d'),desenhando=false,tem=false;
+function ajusta(){var r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;ctx.scale(d,d);ctx.lineWidth=2.2;ctx.lineCap='round';ctx.strokeStyle='#111';tem=false}
+ajusta();
+function pos(e){var r=c.getBoundingClientRect(),t=e.touches&&e.touches[0]?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
+function ini(e){e.preventDefault();var r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;if(Math.abs(c.width-r.width*d)>2){ajusta()}desenhando=true;tem=true;var p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+0.1,p.y+0.1);ctx.stroke()}
+function mov(e){if(!desenhando)return;e.preventDefault();var p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke()}
+function fim(){desenhando=false}
+c.addEventListener('touchstart',ini,{passive:false});c.addEventListener('touchmove',mov,{passive:false});c.addEventListener('touchend',fim);c.addEventListener('touchcancel',fim);
+c.addEventListener('mousedown',ini);window.addEventListener('mousemove',mov);window.addEventListener('mouseup',fim);
+document.getElementById('limpar').onclick=function(){ctx.clearRect(0,0,c.width,c.height);tem=false};
+var msg=document.getElementById('msg');
+function esc(s){return s.replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
+document.getElementById('enviar').onclick=async function(){
+var nome=document.getElementById('nome').value.trim(),doc=document.getElementById('doc').value.trim();
+if(!nome||!doc){msg.textContent='Preencha nome e CPF.';return}
+if(!tem){msg.textContent='Faça sua assinatura no quadro.';return}
+if(!document.getElementById('ok').checked){msg.textContent='Marque que leu e concorda.';return}
+var img=c.toDataURL('image/png'),data=new Date().toLocaleString('pt-BR');
+var termo=document.querySelector('.card').innerHTML;
+var html='<!DOCTYPE html><html lang="pt-BR"><meta charset="utf-8"><body style="font-family:sans-serif;max-width:680px;margin:auto;padding:20px">'+termo+'<hr><p><b>Cliente:</b> '+esc(nome)+' – CPF: '+esc(doc)+'</p><p>Assinado em: '+data+'</p><img src="'+img+'" style="max-width:320px;border-bottom:1px solid #000"></body></html>';
+try{var blob=new Blob([html],{type:'text/html'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='termo-assinado-'+nome.replace(/\s+/g,'-')+'.html';document.body.appendChild(a);a.click();a.remove();msg.textContent='Termo assinado e baixado. Envie o arquivo para Heitor Robert.';return}catch(e){}
+msg.textContent='Termo assinado. Tire um print desta tela e envie para a diretoria.';
+};
+})();
+</script>
+</body>
+</html>
